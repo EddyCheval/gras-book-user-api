@@ -18,7 +18,7 @@ build_image:
     - docker:19.03.0-dind
   stage: build
   script:
-    - docker build -e "DB_PORT=8080" -t api-user:1.0.0 .
+    - docker build -t api-user:1.0.0 .
 
 linter:
   stage: test
