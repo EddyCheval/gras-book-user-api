@@ -1,0 +1,33 @@
+{
+  "name": "user-api",
+  "version": "1.0.0",
+  "description": "User API of GrasBook social network maybe for Americains\"",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/projet-gras-book/user-api.git"
+  },
+  "author": "GrasBook Team (Eddy Cheval)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/projet-gras-book/user-api/issues"
+  },
+  "homepage": "https://gitlab.com/projet-gras-book/user-api#readme",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/joi": "^15.1.1",
+    "@hapi/joi-date": "^1.3.0", 
+    "@hapi/vision": "^5.5.4",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.5.1",
+    "hapi-swagger": "^10.2.0",
+    "jest": "^24.9.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.1"
+  }
+}
