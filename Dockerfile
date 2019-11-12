@@ -1,4 +1,4 @@
-ENV DB_PORT
+ENV DB_PORT 8080
 
 FROM node:12.12.0
 
