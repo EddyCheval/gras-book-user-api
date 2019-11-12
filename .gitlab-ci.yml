@@ -18,12 +18,20 @@ build_image:
   services:
     - docker:19.03.1-dind
   script:
-    - ls
     - docker build -t api-user:1.0.0 .
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
 
 linter:
   stage: test
-  script: npm run linter
+  script:
+    - npm run linter
 
 tests:
   stage: test
