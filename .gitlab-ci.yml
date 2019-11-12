@@ -18,6 +18,7 @@ build_image:
   services:
     - docker:19.03.1-dind
   script:
+    - ls
     - docker build -t api-user:1.0.0 .
 
 linter:
