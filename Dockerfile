@@ -1,6 +1,6 @@
-ENV DB_PORT 8080
-
 FROM node:12.12.0
+
+ENV DB_PORT 8080
 
 COPY . .
 
