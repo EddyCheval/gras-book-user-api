@@ -17,7 +17,7 @@ build_image:
 
 linter:
   stage: linter
-  script: npm linter
+  script: npm run linter
 
 tests:
   stage: test
