@@ -1,12 +1,12 @@
 const responseJson = {
-    '400': {
-        'description': 'Bad Request',
-        'examples': {
-            'application/json': {
-                message: 'Bad Request'
-            }
-        }
+  '400': {
+    description: 'Bad Request',
+    examples: {
+      'application/json': {
+        message: 'Bad Request'
+      }
     }
-}
+  }
+};
 
-module.exports = responseJson
+module.exports = responseJson;

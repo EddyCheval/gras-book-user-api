@@ -1,6 +1,7 @@
 image: node:12.12.0
 
 stages:
+  - linter
   - build
   - test
 
@@ -8,14 +9,20 @@ cache:
   paths:
     - node_modules/
 
-install_dependencies:
+build_image:
   stage: build
   script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
+    - docker build -t api-user:1.0.0 .
+
+linter:
+  stage: linter
+  script: npm linter
 
 tests:
   stage: test
   script: npm test
+
+deploy:
+  stage: deploy
+  script: echo "Deploy !"
+  only: [master]
