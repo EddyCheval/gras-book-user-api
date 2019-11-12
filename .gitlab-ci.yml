@@ -1,8 +1,7 @@
-image: node:12.12.0
+image: docker:19.03.1
 
 stages:
   - build
-  - linter
   - test
   - deploy
 
@@ -16,7 +15,7 @@ build_image:
     - docker build -t api-user:1.0.0 .
 
 linter:
-  stage: linter
+  stage: test
   script: npm run linter
 
 tests:
