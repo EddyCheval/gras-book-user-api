@@ -3,6 +3,7 @@ image: node:12.12.0
 stages:
   - build
   - test
+  - build_docker
   - deploy
 
 cache:
@@ -11,7 +12,7 @@ cache:
 
 build_image:
   image: docker:19.03.1
-  stage: build
+  stage: build_docker
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ''
