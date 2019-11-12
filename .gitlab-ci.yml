@@ -10,13 +10,13 @@ cache:
     - node_modules/
 
 build_image:
+  image: docker:19.03.1
   stage: build
-  image: docker:stable
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ''
   services:
-    - docker:19.03.0-dind
+    - docker:19.03.1-dind
   script:
     - docker build -t api-user:1.0.0 .
 
