@@ -1,12 +1,12 @@
 const responseJson = {
-    '403': {
-        'description': 'Forbidden',
-        'examples': {
-            'application/json': {
-                message: 'Forbidden'
-            }
-        }
+  '403': {
+    description: 'Forbidden',
+    examples: {
+      'application/json': {
+        message: 'Forbidden'
+      }
     }
-}
+  }
+};
 
-module.exports = responseJson
+module.exports = responseJson;
