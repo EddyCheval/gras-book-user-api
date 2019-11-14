@@ -1,11 +1,11 @@
-const User = require('./users');
-const json = require('./user.json');
+const Group = require('./groups');
+const json = require('./group.json');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
-  userSchema,
-  userUpdateSchema
-} = require('./users.validator');
+  groupSchema,
+  groupUpdateSchema
+} = require('./groups.validator');
 const {
   response400,
   response200,
@@ -31,12 +31,12 @@ responses.resp201 = response201;
 responses.resp204 = response204;
 responses.resp404 = response404;
 
-const UserRoute = [
+const GroupRoute = [
   {
     method: 'GET',
-    path: '/users/',
+    path: '/groups/',
     handler(request) {
-      return User.findAll(request);
+      return Group.findAll(request);
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -58,9 +58,9 @@ const UserRoute = [
   },
   {
     method: 'GET',
-    path: '/users/{uuid}',
+    path: '/groups/{uuid}',
     handler(request, h) {
-      return User.findByUUID(request.params.uuid).catch(err => {
+      return Group.findByUUID(request.params.uuid).catch(err => {
         if (err.code === 404) {
           return h.response().code(404);
         }
@@ -86,13 +86,13 @@ const UserRoute = [
   },
   {
     method: 'POST',
-    path: '/users/',
+    path: '/groups/',
     handler(request) {
-      return User.create(request.payload);
+      return Group.create(request.payload);
     },
     options: {
       validate: {
-        payload: userSchema
+        payload: groupSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -110,14 +110,14 @@ const UserRoute = [
   },
   {
     method: 'PUT',
-    path: '/users/{uuid}',
+    path: '/groups/{uuid}',
     handler(request) {
-      return User.update(request.payload, request);
+      return Group.update(request.payload, request);
     },
     options: {
       validate: {
         params: queryFindByUUIDParamSchema,
-        payload: userUpdateSchema
+        payload: groupUpdateSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -135,9 +135,9 @@ const UserRoute = [
   },
   {
     method: 'DELETE',
-    path: '/users/{uuid}',
+    path: '/groups/{uuid}',
     handler(request) {
-      return User.destroy(request.params);
+      return Group.destroy(request.params);
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -157,4 +157,4 @@ const UserRoute = [
   }
 ];
 
-module.exports = UserRoute;
+module.exports = GroupRoute;

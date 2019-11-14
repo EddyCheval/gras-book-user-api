@@ -1,4 +1,4 @@
-const User = require('./users.model');
+const Group = require('./groups.model');
 
 const findAll = options => {
   const where = { ...options.query };
@@ -7,11 +7,11 @@ const findAll = options => {
   delete where.page;
   delete where.sort;
   args.query.where = where;
-  return User.findAll(args.query);
+  return Group.findAll(args.query);
 };
 
 const findByUUID = options => {
-  return User.findByPk(options).then(result => {
+  return Group.findByPk(options).then(result => {
     if (!result) {
       const error = new Error();
       error.message = 'No match found.';
@@ -26,10 +26,10 @@ const update = (values, options) => {
   const items = { ...values };
   args.where = {};
   args.where.id = args.params.uuid;
-  return User.update(items, args);
+  return Group.update(items, args);
 };
 const create = (values, options) => {
-  return User.create(values, options);
+  return Group.create(values, options);
 };
 
 const destroy = options => {
@@ -38,7 +38,7 @@ const destroy = options => {
       id: options.uuid
     }
   };
-  return User.destroy(where); // Necessite DeleteAt
+  return Group.destroy(where); // Necessite DeleteAt
 };
 
 module.exports = { findAll, findByUUID, update, create, destroy };
