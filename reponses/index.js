@@ -7,6 +7,7 @@ const response416 = require('./416');
 const response401 = require('./401');
 const response201 = require('./201');
 const response204 = require('./204');
+const response404 = require('./404');
 
 module.exports = {
   response400,
@@ -17,5 +18,6 @@ module.exports = {
   response500,
   response401,
   response201,
-  response204
+  response204,
+  response404
 };

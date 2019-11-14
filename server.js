@@ -8,6 +8,7 @@ const sequelize = require('./connectDatabase/connectDatabase');
 const Pack = require('./package');
 // Routes :
 const UserRoute = require('./users');
+const GroupRoute = require('./groups');
 
 const init = async () => {
   sequelize
@@ -48,6 +49,7 @@ const init = async () => {
     }
   });
   server.route(UserRoute);
+  server.route(GroupRoute);
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };

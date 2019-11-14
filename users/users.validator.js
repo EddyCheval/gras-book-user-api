@@ -108,11 +108,60 @@ const queryFindAllParamSchema = {
 };
 
 const queryFindByUUIDParamSchema = {
-  query: {
-    id: Joi.string()
-      .guid()
-      .description("User's uuid")
-  }
+  uuid: Joi.string()
+    .guid()
+    .description("User's uuid")
 };
 
-module.exports = { userSchema, queryFindAllParamSchema, queryFindByUUIDParamSchema };
+const userUpdateSchema = Joi.object({
+  firstName: Joi.string()
+    .alphanum()
+    .min(1)
+    .max(50)
+    .description("User's first name"),
+
+  lastName: Joi.string()
+    .alphanum()
+    .min(1)
+    .max(50)
+    .description("User's last name"),
+
+  birthDate: Joi.date()
+    .format('YYYY-MM-DD')
+    .utc()
+    .description("User's birth date"),
+
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: {
+        allow: ['com', 'net', 'fr']
+      }
+    })
+    .description("User's email"),
+
+  login: Joi.string()
+    .min(8)
+    .max(30)
+    .description("User's login"),
+
+  password: Joi.string()
+    .min(8)
+    .max(250)
+    .description("User's password"),
+
+  description: Joi.string()
+    .max(250)
+    .description("User's description"),
+
+  pictureUrl: Joi.string()
+    .uri({ scheme: ['http', 'https'] })
+    .description("User's picture url")
+});
+
+module.exports = {
+  userSchema,
+  queryFindAllParamSchema,
+  queryFindByUUIDParamSchema,
+  userUpdateSchema
+};
