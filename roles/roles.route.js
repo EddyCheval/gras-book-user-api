@@ -1,5 +1,6 @@
 const Role = require('./roles');
 const json = require('./role.json');
+const ErrorFunctions = require('../functions/functions.error');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
@@ -35,8 +36,10 @@ const RoleRoute = [
   {
     method: 'GET',
     path: '/roles/',
-    handler(request) {
-      return Role.findAll(request);
+    handler(request, h) {
+      return Role.findAll(request).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -61,10 +64,7 @@ const RoleRoute = [
     path: '/roles/{uuid}',
     handler(request, h) {
       return Role.findByUUID(request.params.uuid).catch(err => {
-        if (err.code === 404) {
-          return h.response().code(404);
-        }
-        return h.response().code(500);
+        return ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -87,8 +87,10 @@ const RoleRoute = [
   {
     method: 'POST',
     path: '/roles/',
-    handler(request) {
-      return Role.create(request.payload);
+    handler(request, h) {
+      return Role.create(request.payload).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: {
@@ -111,8 +113,10 @@ const RoleRoute = [
   {
     method: 'PUT',
     path: '/roles/{uuid}',
-    handler(request) {
-      return Role.update(request.payload, request);
+    handler(request, h) {
+      return Role.update(request.payload, request).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: {
@@ -136,8 +140,10 @@ const RoleRoute = [
   {
     method: 'DELETE',
     path: '/roles/{uuid}',
-    handler(request) {
-      return Role.destroy(request.params);
+    handler(request, h) {
+      return Role.destroy(request.params).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },

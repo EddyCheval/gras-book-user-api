@@ -13,7 +13,7 @@ const userGroupSchema = Joi.object({
 
   roleId: Joi.string()
     .guid()
-    .description("UserGroup's user uuid"),
+    .description("UserGroup's role uuid"),
 
   createdAt: Joi.date()
     .format('YYYY-MM-DDTHH:mm:ss.SSSZ')

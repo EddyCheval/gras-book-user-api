@@ -2,7 +2,7 @@
   "id": "a0c084c7-a217-47d4-8d1a-0d654aa51d2f",
   "firstName": "frrdrfdr",
   "lastName": "fffffffffffff",
-  "birthDate": null,
+  "birthDate": "2019-11-14T17:16:22.097Z",
   "email": "edd98102@gmail.com",
   "login": "sefsefesfs",
   "password": "sefesfes",
@@ -14,9 +14,9 @@
     {
       "userId": "a0c084c7-a217-47d4-8d1a-0d654aa51d2f",
       "groupId": "2e2a5ab9-9f63-418f-969f-fa6b65363a5f",
-      "roleId": "cd77b614-792f-425b-afe4-74789312dc57",
-      "createdAt": "2019-11-15",
-      "updatedAt": "2019-11-16",
+      "roleId": "2af1877f-00a3-4c89-9889-8b4d1c1bbec3",
+      "createdAt": "2019-11-15T17:16:22.097Z",
+      "updatedAt": "2019-11-16T17:16:22.097Z",
       "role": {
         "name": "Admnistrator"
       }

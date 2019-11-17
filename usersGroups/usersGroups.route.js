@@ -2,6 +2,7 @@ const UserGroup = require('./usersGroups');
 const json = require('./userGroup.json');
 const usersJson = require('./users.json');
 const groupsJson = require('./groups.json');
+const { ErrorFunctions } = require('../functions');
 const {
   userGroupSchema,
   deleteUserGroupSchema,
@@ -42,18 +43,24 @@ const UserGroupRoute = [
   {
     method: 'GET',
     path: '/usersGroups/',
-    handler(request) {
-      return UserGroup.findAll(request);
+    handler(request, h) {
+      return UserGroup.findAll(request).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
-      // validate: queryFindAllParamSchema,
+      validate: userGroupSchema,
       plugins: {
         'hapi-swagger': {
           responses: {
+            // deja gérer mais pas formatter
             ...responses.resp400,
             ...responses.resp200,
+            // C pas plustot pour le contenu multimédia ?
             ...responses.resp206,
             ...responses.resp416,
+            // byat
+            // Wait for keycloak
             ...responses.resp403,
             ...responses.resp500
           },
@@ -68,10 +75,7 @@ const UserGroupRoute = [
     path: '/users/{uuid}/Groups',
     async handler(request, h) {
       return UserGroup.findByUserUUID(request.params.uuid, request.query).catch(err => {
-        if (err.code === 404) {
-          return h.response().code(404);
-        }
-        return h.response().code(500);
+        return ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -96,10 +100,7 @@ const UserGroupRoute = [
     path: '/groups/{uuid}/Users',
     async handler(request, h) {
       return UserGroup.findByGroupUUID(request.params.uuid, request.query).catch(err => {
-        if (err.code === 404) {
-          return h.response().code(404);
-        }
-        return h.response().code(500);
+        return ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -122,8 +123,10 @@ const UserGroupRoute = [
   {
     method: 'POST',
     path: '/usersGroups/',
-    handler(request) {
-      return UserGroup.create(request.payload);
+    handler(request, h) {
+      return UserGroup.create(request.payload).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: {
@@ -146,8 +149,10 @@ const UserGroupRoute = [
   {
     method: 'PUT',
     path: '/users/{userUUID}/groups/{groupUUID}/role',
-    handler(request) {
-      return UserGroup.update(request.payload, request).catch(ex => console.log(ex));
+    handler(request, h) {
+      return UserGroup.update(request.payload, request).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: {
@@ -172,8 +177,10 @@ const UserGroupRoute = [
     // Role ne me parait pas judicieux dans le nom de route. quels est ton avis jeune observateur impétueux ?
     method: 'PUT',
     path: '/groups/{userUUID}/users/{groupUUID}/role',
-    handler(request) {
-      return UserGroup.update(request.payload, request).catch(ex => console.log(ex));
+    handler(request, h) {
+      return UserGroup.update(request.payload, request).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: {
@@ -197,8 +204,10 @@ const UserGroupRoute = [
   {
     method: 'DELETE',
     path: '/groups/{groupUUID}/users/{userUUID}',
-    handler(request) {
-      return UserGroup.destroy(request.params);
+    handler(request, h) {
+      return UserGroup.destroy(request.params).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: { params: deleteUserGroupSchema },
@@ -219,8 +228,10 @@ const UserGroupRoute = [
   {
     method: 'DELETE',
     path: '/users/{groupUUID}/groups/{userUUID}',
-    handler(request) {
-      return UserGroup.destroy(request.params);
+    handler(request, h) {
+      return UserGroup.destroy(request.params).catch(err => {
+        return ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: { params: deleteUserGroupSchema },

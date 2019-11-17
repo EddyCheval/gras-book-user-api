@@ -7,4 +7,11 @@ const error404 = result => {
   }
 };
 
-module.exports = { error404 };
+const errorCodeChange = (h, err) => {
+  if (err.code !== undefined) {
+    return h.response().code(err.code);
+  }
+  return h.response().code(500);
+};
+
+module.exports = { error404, errorCodeChange };
