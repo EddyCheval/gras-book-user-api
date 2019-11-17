@@ -9,6 +9,8 @@ const Pack = require('./package');
 // Routes :
 const UserRoute = require('./users');
 const GroupRoute = require('./groups');
+const RoleRoute = require('./roles');
+const UserGroupRoute = require('./usersGroups');
 
 const init = async () => {
   sequelize
@@ -50,6 +52,8 @@ const init = async () => {
   });
   server.route(UserRoute);
   server.route(GroupRoute);
+  server.route(RoleRoute);
+  server.route(UserGroupRoute);
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };
