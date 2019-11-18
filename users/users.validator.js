@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
-// Songer a sortir les schemas s'ils deviennent trop nombreux dans un dossier users.validator/ect.js
+
 const userSchema = Joi.object({
   id: Joi.string()
     .guid()

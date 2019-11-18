@@ -1,34 +1,25 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
-const groupSchema = Joi.object({
+const roleSchema = Joi.object({
   id: Joi.string()
     .guid()
     .required()
-    .description("Group's uuid"),
+    .description("Role's uuid"),
 
   name: Joi.string()
     .alphanum()
     .min(1)
     .max(50)
     .required()
-    .description("Group's name"),
-
-  creationDate: Joi.date()
-    .format('YYYY-MM-DD')
-    .utc()
-    .description("Group's date of creation"),
-
-  description: Joi.string()
-    .max(250)
-    .description("Group's description"),
+    .description("Role's name"),
 
   createdAt: Joi.date()
     .utc()
-    .description("Group's creation date"),
+    .description("Role's creation date"),
 
   updatedAt: Joi.date()
     .utc()
-    .description("Group's last update date")
+    .description("Role's last update date")
 });
 
 const queryFindAllParamSchema = {
@@ -37,7 +28,7 @@ const queryFindAllParamSchema = {
       .integer()
       .min(1)
       .max(100)
-      .description('Group limit number')
+      .description('Role limit number')
       .default(10),
 
     page: Joi.number()
@@ -52,36 +43,27 @@ const queryFindAllParamSchema = {
       .alphanum()
       .min(1)
       .max(50)
-      .description("Group's name")
+      .description("Role's name")
   }
 };
 
 const queryFindByUUIDParamSchema = {
   uuid: Joi.string()
     .guid()
-    .description("Group's uuid")
+    .description("Role's uuid")
 };
 
-const groupUpdateSchema = Joi.object({
+const roleUpdateSchema = Joi.object({
   name: Joi.string()
     .alphanum()
     .min(1)
     .max(50)
-    .description("Group's name"),
-
-  creationDate: Joi.date()
-    .format('YYYY-MM-DD')
-    .utc()
-    .description("Group's date of creation"),
-
-  description: Joi.string()
-    .max(250)
-    .description("Group's description")
+    .description("Role's name")
 });
 
 module.exports = {
-  groupSchema,
+  roleSchema,
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
-  groupUpdateSchema
+  roleUpdateSchema
 };

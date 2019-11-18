@@ -1,4 +1,4 @@
-const Group = require('./groups.model');
+const Role = require('./roles.model');
 const { ErrorFunctions } = require('../functions');
 
 const findAll = options => {
@@ -8,14 +8,14 @@ const findAll = options => {
   delete where.page;
   delete where.sort;
   args.query.where = where;
-  return Group.findAll(args.query).then(result => {
+  return Role.findAll(args.query).then(result => {
     ErrorFunctions.error404(result);
     return result;
   });
 };
 
 const findByUUID = options => {
-  return Group.findByPk(options).then(result => {
+  return Role.findByPk(options).then(result => {
     ErrorFunctions.error404(result);
     return result;
   });
@@ -25,10 +25,10 @@ const update = (values, options) => {
   const items = { ...values };
   args.where = {};
   args.where.id = args.params.uuid;
-  return Group.update(items, args);
+  return Role.update(items, args);
 };
 const create = (values, options) => {
-  return Group.create(values, options);
+  return Role.create(values, options);
 };
 
 const destroy = options => {
@@ -37,7 +37,7 @@ const destroy = options => {
       id: options.uuid
     }
   };
-  return Group.destroy(where);
+  return Role.destroy(where);
 };
 
 module.exports = { findAll, findByUUID, update, create, destroy };

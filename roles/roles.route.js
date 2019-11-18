@@ -1,12 +1,12 @@
-const Group = require('./groups');
-const json = require('./group.json');
+const Role = require('./roles');
+const json = require('./role.json');
 const ErrorFunctions = require('../functions/functions.error');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
-  groupSchema,
-  groupUpdateSchema
-} = require('./groups.validator');
+  roleSchema,
+  roleUpdateSchema
+} = require('./roles.validator');
 const {
   response400,
   response200,
@@ -32,12 +32,14 @@ responses.resp201 = response201;
 responses.resp204 = response204;
 responses.resp404 = response404;
 
-const GroupRoute = [
+const RoleRoute = [
   {
     method: 'GET',
-    path: '/groups/',
+    path: '/roles/',
     handler(request, h) {
-      return Group.findAll(request).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return Role.findAll(request).catch(err => {
+        ErrorFunctions.errorCodeChange(h, err);
+      });
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -59,9 +61,9 @@ const GroupRoute = [
   },
   {
     method: 'GET',
-    path: '/groups/{uuid}',
+    path: '/roles/{uuid}',
     handler(request, h) {
-      return Group.findByUUID(request.params.uuid).catch(err =>
+      return Role.findByUUID(request.params.uuid).catch(err =>
         ErrorFunctions.errorCodeChange(h, err)
       );
     },
@@ -84,13 +86,13 @@ const GroupRoute = [
   },
   {
     method: 'POST',
-    path: '/groups/',
+    path: '/roles/',
     handler(request, h) {
-      return Group.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return Role.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
-        payload: groupSchema
+        payload: roleSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -108,16 +110,16 @@ const GroupRoute = [
   },
   {
     method: 'PUT',
-    path: '/groups/{uuid}',
+    path: '/roles/{uuid}',
     handler(request, h) {
-      return Group.update(request.payload, request).catch(err =>
+      return Role.update(request.payload, request).catch(err =>
         ErrorFunctions.errorCodeChange(h, err)
       );
     },
     options: {
       validate: {
         params: queryFindByUUIDParamSchema,
-        payload: groupUpdateSchema
+        payload: roleUpdateSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -135,9 +137,9 @@ const GroupRoute = [
   },
   {
     method: 'DELETE',
-    path: '/groups/{uuid}',
+    path: '/roles/{uuid}',
     handler(request, h) {
-      return Group.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return Role.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -157,4 +159,4 @@ const GroupRoute = [
   }
 ];
 
-module.exports = GroupRoute;
+module.exports = RoleRoute;

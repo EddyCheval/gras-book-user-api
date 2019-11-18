@@ -1,4 +1,5 @@
 const User = require('./users.model');
+const { ErrorFunctions } = require('../functions');
 
 const findAll = options => {
   const where = { ...options.query };
@@ -7,17 +8,15 @@ const findAll = options => {
   delete where.page;
   delete where.sort;
   args.query.where = where;
-  return User.findAll(args.query);
+  return User.findAll(args.query).then(result => {
+    ErrorFunctions.error404(result);
+    return result;
+  });
 };
 
 const findByUUID = options => {
   return User.findByPk(options).then(result => {
-    if (!result) {
-      const error = new Error();
-      error.message = 'No match found.';
-      error.code = 404;
-      throw error;
-    }
+    ErrorFunctions.error404(result);
     return result;
   });
 };
@@ -38,7 +37,7 @@ const destroy = options => {
       id: options.uuid
     }
   };
-  return User.destroy(where); // Necessite DeleteAt
+  return User.destroy(where);
 };
 
 module.exports = { findAll, findByUUID, update, create, destroy };

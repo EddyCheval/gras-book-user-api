@@ -1,5 +1,6 @@
 const User = require('./users');
 const json = require('./user.json');
+const ErrorFunctions = require('../functions/functions.error');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
@@ -35,8 +36,8 @@ const UserRoute = [
   {
     method: 'GET',
     path: '/users/',
-    handler(request) {
-      return User.findAll(request);
+    handler(request, h) {
+      return User.findAll(request).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -60,12 +61,9 @@ const UserRoute = [
     method: 'GET',
     path: '/users/{uuid}',
     handler(request, h) {
-      return User.findByUUID(request.params.uuid).catch(err => {
-        if (err.code === 404) {
-          return h.response().code(404);
-        }
-        return h.response().code(500);
-      });
+      return User.findByUUID(request.params.uuid).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -87,8 +85,8 @@ const UserRoute = [
   {
     method: 'POST',
     path: '/users/',
-    handler(request) {
-      return User.create(request.payload);
+    handler(request, h) {
+      return User.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -111,8 +109,10 @@ const UserRoute = [
   {
     method: 'PUT',
     path: '/users/{uuid}',
-    handler(request) {
-      return User.update(request.payload, request);
+    handler(request, h) {
+      return User.update(request.payload, request).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: {
@@ -136,8 +136,8 @@ const UserRoute = [
   {
     method: 'DELETE',
     path: '/users/{uuid}',
-    handler(request) {
-      return User.destroy(request.params);
+    handler(request, h) {
+      return User.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
