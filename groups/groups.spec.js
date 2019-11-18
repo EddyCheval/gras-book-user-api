@@ -8,8 +8,7 @@ describe('groups.validator.js', () => {
     });
 
     it('Id fail: null value', () => {
-      const falsejson = { ...json };
-      falsejson.id = undefined;
+      const falsejson = { ...json, id: undefined };
       expect(groupSchema.validate(falsejson).error).not.toBe(null);
     });
 

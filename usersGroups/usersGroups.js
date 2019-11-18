@@ -46,23 +46,13 @@ const findByUserUUID = (id, options) => {
     if (args.sortColumn === null || args.sortColumn === undefined) {
       args.sortColumn = 'name';
     }
-    // Le JS c de la merde faut vraiment être con pour consevoir un merde pareille
-    // je savais que l'humanité aime la merde mais a se point (...)
-    // Ce principe d'object remplis de bullshit Useless avec d'autres objets avec du bullshit useless dedans ....
-    // SI QUELQU'UN CONNAIS UNE METHODE TOJSON POUR UNE OBJET DE MERDE DE TYPE SEQUZLIZE CHIASSE dite le moi
-    // Les soluces sont toutes nazes comme js (#salt)
-    // https://stackoverflow.com/questions/21961818/sequelize-convert-entity-to-plain-object
-    // https://github.com/sequelize/sequelize/issues/4291
-
     const { groups } = result.dataValues;
 
     groups.forEach(group => {
-      // Euhh ES7 est censé permettre sa mais MAIS j'arrive pas a utiliser cette syntaxe a la zeub ---------> const { userGroup, ...noUserGroup } = group.dataValues;
       const groupWithDeletedAttributes = group.dataValues;
       delete groupWithDeletedAttributes.userGroup;
     });
 
-    // Quasi au plus court et au plus simple ET POURTANT SA RESTE DEGEUX CE CODE DE MERDE
     return OperatorFunctions.sortByKey(groups, args.sortColumn, args.sort).slice(0, args.limit);
   });
 };
@@ -110,7 +100,7 @@ const destroy = ({ userUUID, groupUUID }) => {
       groupId: groupUUID
     }
   };
-  return UserGroup.destroy(where); // Necessite DeleteAt
+  return UserGroup.destroy(where);
 };
 
 const update = (values, options) => {
@@ -122,4 +112,4 @@ const update = (values, options) => {
   return UserGroup.update(items, args);
 };
 
-module.exports = { findAll, create, findByUserUUID, findByGroupUUID, destroy, update }; // , findByUUID, update, create, destroy };
+module.exports = { findAll, create, findByUserUUID, findByGroupUUID, destroy, update };

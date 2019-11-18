@@ -16,12 +16,7 @@ const findAll = options => {
 
 const findByUUID = options => {
   return Group.findByPk(options).then(result => {
-    if (!result) {
-      const error = new Error();
-      error.message = 'No match found.';
-      error.code = 404;
-      throw error;
-    }
+    ErrorFunctions.error404(result);
     return result;
   });
 };
@@ -42,7 +37,7 @@ const destroy = options => {
       id: options.uuid
     }
   };
-  return Group.destroy(where); // Necessite DeleteAt
+  return Group.destroy(where);
 };
 
 module.exports = { findAll, findByUUID, update, create, destroy };

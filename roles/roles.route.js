@@ -63,9 +63,9 @@ const RoleRoute = [
     method: 'GET',
     path: '/roles/{uuid}',
     handler(request, h) {
-      return Role.findByUUID(request.params.uuid).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Role.findByUUID(request.params.uuid).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -88,9 +88,7 @@ const RoleRoute = [
     method: 'POST',
     path: '/roles/',
     handler(request, h) {
-      return Role.create(request.payload).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Role.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -114,9 +112,9 @@ const RoleRoute = [
     method: 'PUT',
     path: '/roles/{uuid}',
     handler(request, h) {
-      return Role.update(request.payload, request).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Role.update(request.payload, request).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: {
@@ -141,9 +139,7 @@ const RoleRoute = [
     method: 'DELETE',
     path: '/roles/{uuid}',
     handler(request, h) {
-      return Role.destroy(request.params).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Role.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },

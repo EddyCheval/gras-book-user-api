@@ -37,9 +37,7 @@ const GroupRoute = [
     method: 'GET',
     path: '/groups/',
     handler(request, h) {
-      return Group.findAll(request).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Group.findAll(request).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -63,9 +61,9 @@ const GroupRoute = [
     method: 'GET',
     path: '/groups/{uuid}',
     handler(request, h) {
-      return Group.findByUUID(request.params.uuid).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Group.findByUUID(request.params.uuid).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -88,9 +86,7 @@ const GroupRoute = [
     method: 'POST',
     path: '/groups/',
     handler(request, h) {
-      return Group.create(request.payload).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Group.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -114,9 +110,9 @@ const GroupRoute = [
     method: 'PUT',
     path: '/groups/{uuid}',
     handler(request, h) {
-      return Group.update(request.payload, request).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Group.update(request.payload, request).catch(err =>
+        ErrorFunctions.errorCodeChange(h, err)
+      );
     },
     options: {
       validate: {
@@ -141,9 +137,7 @@ const GroupRoute = [
     method: 'DELETE',
     path: '/groups/{uuid}',
     handler(request, h) {
-      return Group.destroy(request.params).catch(err => {
-        ErrorFunctions.errorCodeChange(h, err);
-      });
+      return Group.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },

@@ -37,7 +37,7 @@ const destroy = options => {
       id: options.uuid
     }
   };
-  return User.destroy(where); // Necessite DeleteAt
+  return User.destroy(where);
 };
 
 module.exports = { findAll, findByUUID, update, create, destroy };
