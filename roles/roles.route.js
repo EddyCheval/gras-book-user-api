@@ -38,7 +38,7 @@ const RoleRoute = [
     path: '/roles/',
     handler(request, h) {
       return Role.findAll(request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -64,7 +64,7 @@ const RoleRoute = [
     path: '/roles/{uuid}',
     handler(request, h) {
       return Role.findByUUID(request.params.uuid).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -89,7 +89,7 @@ const RoleRoute = [
     path: '/roles/',
     handler(request, h) {
       return Role.create(request.payload).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -115,7 +115,7 @@ const RoleRoute = [
     path: '/roles/{uuid}',
     handler(request, h) {
       return Role.update(request.payload, request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -142,7 +142,7 @@ const RoleRoute = [
     path: '/roles/{uuid}',
     handler(request, h) {
       return Role.destroy(request.params).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {

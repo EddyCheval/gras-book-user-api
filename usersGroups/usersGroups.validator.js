@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
-// Songer a sortir les schemas s'ils deviennent trop nombreux dans un dossier roles.validator/ect.js
+
 const userGroupSchema = Joi.object({
   groupId: Joi.string()
     .guid()
@@ -16,12 +16,10 @@ const userGroupSchema = Joi.object({
     .description("UserGroup's role uuid"),
 
   createdAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("UserGroup's creation date"),
 
   updatedAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("UserGroup's last update date")
 });

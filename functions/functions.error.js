@@ -1,8 +1,6 @@
 const error404 = result => {
   if (!result) {
-    const error = new Error();
-    error.message = 'No match found.';
-    error.code = 404;
+    const error = new Error('No match found.', 404);
     throw error;
   }
 };

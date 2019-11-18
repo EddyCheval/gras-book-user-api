@@ -1,4 +1,5 @@
 const Role = require('./roles.model');
+const { ErrorFunctions } = require('../functions');
 
 const findAll = options => {
   const where = { ...options.query };
@@ -7,7 +8,10 @@ const findAll = options => {
   delete where.page;
   delete where.sort;
   args.query.where = where;
-  return Role.findAll(args.query);
+  return Role.findAll(args.query).then(result => {
+    ErrorFunctions.error404(result);
+    return result;
+  });
 };
 
 const findByUUID = options => {

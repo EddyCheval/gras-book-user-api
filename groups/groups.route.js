@@ -38,7 +38,7 @@ const GroupRoute = [
     path: '/groups/',
     handler(request, h) {
       return Group.findAll(request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -64,7 +64,7 @@ const GroupRoute = [
     path: '/groups/{uuid}',
     handler(request, h) {
       return Group.findByUUID(request.params.uuid).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -89,7 +89,7 @@ const GroupRoute = [
     path: '/groups/',
     handler(request, h) {
       return Group.create(request.payload).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -115,7 +115,7 @@ const GroupRoute = [
     path: '/groups/{uuid}',
     handler(request, h) {
       return Group.update(request.payload, request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -142,7 +142,7 @@ const GroupRoute = [
     path: '/groups/{uuid}',
     handler(request, h) {
       return Group.destroy(request.params).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {

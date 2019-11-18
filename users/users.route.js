@@ -38,7 +38,7 @@ const UserRoute = [
     path: '/users/',
     handler(request, h) {
       return User.findAll(request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -64,7 +64,7 @@ const UserRoute = [
     path: '/users/{uuid}',
     handler(request, h) {
       return User.findByUUID(request.params.uuid).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -89,7 +89,7 @@ const UserRoute = [
     path: '/users/',
     handler(request, h) {
       return User.create(request.payload).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -115,7 +115,7 @@ const UserRoute = [
     path: '/users/{uuid}',
     handler(request, h) {
       return User.update(request.payload, request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -142,7 +142,7 @@ const UserRoute = [
     path: '/users/{uuid}',
     handler(request, h) {
       return User.destroy(request.params).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {

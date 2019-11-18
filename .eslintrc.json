@@ -15,5 +15,13 @@
   },
   "rules": {
     "prettier/prettier": ["error"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }

@@ -12,7 +12,10 @@ const findAll = options => {
   delete where.page;
   delete where.sort;
   args.query.where = where;
-  return UserGroup.findAll(args.query);
+  return UserGroup.findAll(args.query).then(result => {
+    ErrorFunctions.error404(result);
+    return result;
+  });
 };
 
 const create = (values, options) => {
@@ -100,11 +103,11 @@ const findByGroupUUID = (id, options) => {
   });
 };
 
-const destroy = options => {
+const destroy = ({ userUUID, groupUUID }) => {
   const where = {
     where: {
-      userId: options.userUUID,
-      groupId: options.groupUUID
+      userId: userUUID,
+      groupId: groupUUID
     }
   };
   return UserGroup.destroy(where); // Necessite DeleteAt
@@ -118,35 +121,5 @@ const update = (values, options) => {
   args.where.groupId = args.params.groupUUID;
   return UserGroup.update(items, args);
 };
-/* const findByUUID = options => {
-  return Role.findByPk(options).then(result => {
-    if (!result) {
-      const error = new Error();
-      error.message = 'No match found.';
-      error.code = 404;
-      throw error;
-    }
-    return result;
-  });
-};
-const update = (values, options) => {
-  const args = { ...options };
-  const items = { ...values };
-  args.where = {};
-  args.where.id = args.params.uuid;
-  return Role.update(items, args);
-};
-const create = (values, options) => {
-  return Role.create(values, options);
-};
-
-const destroy = options => {
-  const where = {
-    where: {
-      id: options.uuid
-    }
-  };
-  return Role.destroy(where); // Necessite DeleteAt
-}; */
 
 module.exports = { findAll, create, findByUserUUID, findByGroupUUID, destroy, update }; // , findByUUID, update, create, destroy };

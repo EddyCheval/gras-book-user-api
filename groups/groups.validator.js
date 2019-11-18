@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
-// Songer a sortir les schemas s'ils deviennent trop nombreux dans un dossier groups.validator/ect.js
+
 const groupSchema = Joi.object({
   id: Joi.string()
     .guid()
@@ -23,12 +23,10 @@ const groupSchema = Joi.object({
     .description("Group's description"),
 
   createdAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("Group's creation date"),
 
   updatedAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("Group's last update date")
 });

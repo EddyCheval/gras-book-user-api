@@ -36,9 +36,6 @@ User.belongsToMany(Group, {
   through: {
     model: UserGroup,
     unique: false
-    /* scope: {
-      userId: 'user'
-    } */
   },
   foreignKey: 'userId',
   constraints: false
@@ -48,9 +45,6 @@ Group.belongsToMany(User, {
   through: {
     model: UserGroup,
     unique: false
-    /* scope: {
-      groupId: 'group'
-    } */
   },
   foreignKey: 'groupId',
   constraints: false
@@ -62,8 +56,7 @@ Role.hasMany(UserGroup, {
 UserGroup.belongsTo(Role, {
   foreignKey: 'roleId'
 });
-// UserGroup.hasOne(User);
-// UserGroup.hasOne(Group);
+
 Group.hasMany(UserGroup, {
   foreignKey: 'groupId'
 });

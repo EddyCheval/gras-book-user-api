@@ -24,7 +24,6 @@ const {
   response404
 } = require('../reponses');
 
-// SAVE ME FROM THIS SHIT AIE AIE AIE
 const responses = {};
 responses.resp200 = response200(json);
 responses.resp206 = response206(json);
@@ -45,22 +44,18 @@ const UserGroupRoute = [
     path: '/usersGroups/',
     handler(request, h) {
       return UserGroup.findAll(request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
-      validate: userGroupSchema,
+      validate: { query: BasicQuerySchema },
       plugins: {
         'hapi-swagger': {
           responses: {
-            // deja gérer mais pas formatter
             ...responses.resp400,
             ...responses.resp200,
-            // C pas plustot pour le contenu multimédia ?
             ...responses.resp206,
             ...responses.resp416,
-            // byat
-            // Wait for keycloak
             ...responses.resp403,
             ...responses.resp500
           },
@@ -75,7 +70,7 @@ const UserGroupRoute = [
     path: '/users/{uuid}/Groups',
     async handler(request, h) {
       return UserGroup.findByUserUUID(request.params.uuid, request.query).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -100,7 +95,7 @@ const UserGroupRoute = [
     path: '/groups/{uuid}/Users',
     async handler(request, h) {
       return UserGroup.findByGroupUUID(request.params.uuid, request.query).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -125,7 +120,7 @@ const UserGroupRoute = [
     path: '/usersGroups/',
     handler(request, h) {
       return UserGroup.create(request.payload).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -148,10 +143,10 @@ const UserGroupRoute = [
   },
   {
     method: 'PUT',
-    path: '/users/{userUUID}/groups/{groupUUID}/role',
+    path: '/users/{userUUID}/groups/{groupUUID}',
     handler(request, h) {
       return UserGroup.update(request.payload, request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -174,12 +169,11 @@ const UserGroupRoute = [
     }
   },
   {
-    // Role ne me parait pas judicieux dans le nom de route. quels est ton avis jeune observateur impétueux ?
     method: 'PUT',
-    path: '/groups/{userUUID}/users/{groupUUID}/role',
+    path: '/groups/{groupUUID}/users/{userUUID}',
     handler(request, h) {
       return UserGroup.update(request.payload, request).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -206,7 +200,7 @@ const UserGroupRoute = [
     path: '/groups/{groupUUID}/users/{userUUID}',
     handler(request, h) {
       return UserGroup.destroy(request.params).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {
@@ -230,7 +224,7 @@ const UserGroupRoute = [
     path: '/users/{groupUUID}/groups/{userUUID}',
     handler(request, h) {
       return UserGroup.destroy(request.params).catch(err => {
-        return ErrorFunctions.errorCodeChange(h, err);
+        ErrorFunctions.errorCodeChange(h, err);
       });
     },
     options: {

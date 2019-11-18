@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
-// Songer a sortir les schemas s'ils deviennent trop nombreux dans un dossier roles.validator/ect.js
+
 const roleSchema = Joi.object({
   id: Joi.string()
     .guid()
@@ -14,12 +14,10 @@ const roleSchema = Joi.object({
     .description("Role's name"),
 
   createdAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("Role's creation date"),
 
   updatedAt: Joi.date()
-    .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
     .utc()
     .description("Role's last update date")
 });
