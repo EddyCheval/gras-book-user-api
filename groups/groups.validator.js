@@ -1,11 +1,6 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 const groupSchema = Joi.object({
-  id: Joi.string()
-    .guid()
-    .required()
-    .description("Group's uuid"),
-
   name: Joi.string()
     .alphanum()
     .min(1)
@@ -35,9 +30,9 @@ const queryFindAllParamSchema = {
   query: {
     limit: Joi.number()
       .integer()
-      .min(1)
       .max(100)
       .description('Group limit number')
+      .positive()
       .default(10),
 
     page: Joi.number()
@@ -47,12 +42,22 @@ const queryFindAllParamSchema = {
       .default(0),
 
     sort: Joi.string().min(1),
+    sortColumn: Joi.string().min(1),
 
     name: Joi.string()
       .alphanum()
       .min(1)
       .max(50)
-      .description("Group's name")
+      .description("Group's name"),
+
+    creationDate: Joi.date()
+      .format('YYYY-MM-DD')
+      .utc()
+      .description("Group's date of creation"),
+
+    description: Joi.string()
+      .max(250)
+      .description("Group's description")
   }
 };
 

@@ -1,6 +1,7 @@
 const { userSchema } = require('./users.validator');
 const json = require('./user.json');
 
+delete json.id;
 describe('users.validator.js', () => {
   describe('validate', () => {
     it('Validator Success', () => {

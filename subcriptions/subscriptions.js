@@ -1,8 +1,6 @@
 const lodash = require('lodash');
-const UserGroup = require('./usersGroups.model');
+const Subscription = require('./subscriptions.model');
 const User = require('../users/users.model');
-const Group = require('../groups/groups.model');
-const Role = require('../roles/roles.model');
 
 const { ErrorFunctions, OperatorFunctions } = require('../functions');
 
@@ -18,7 +16,7 @@ const findAll = options => {
   args.query.offset = args.query.limit * args.query.page;
   args.query.where = where;
 
-  return UserGroup.findAll(args.query)
+  return Subscription.findAll(args.query)
     .then(result => {
       ErrorFunctions.error416(result, args.query);
       ErrorFunctions.error404(result);
@@ -30,26 +28,52 @@ const findAll = options => {
 };
 
 const create = (values, options) => {
-  return UserGroup.create(values, options).catch(err => {
+  return Subscription.create(values, options).catch(err => {
     throw ErrorFunctions.error400(err);
   });
+};
+
+const findByFollowerUUID = (id, options) => {
+  const args = { ...options };
+  args.include = [
+    {
+      model: User,
+      as: 'users'
+    }
+  ];
+
+  return User.findByPk(id, args)
+    .then(result => {
+      ErrorFunctions.error404(result);
+
+      if (lodash.isNull(args.sortColumn) || lodash.isUndefined(args.sortColumn)) {
+        args.sortColumn = 'name';
+      }
+      if (lodash.isNull(args.sort) || lodash.isUndefined(args.sort)) {
+        args.sort = 'ASC';
+      }
+      args.offsetNumber = args.limit * args.page;
+      const { users } = result.dataValues;
+
+      args.offset = args.offsetNumber;
+      const sortedVal = OperatorFunctions.sortByKey(users, args.sortColumn, args.sort).slice(
+        args.offsetNumber,
+        args.offsetNumber + args.limit
+      );
+      ErrorFunctions.error416(sortedVal, args);
+      return sortedVal;
+    })
+    .catch(err => {
+      throw ErrorFunctions.error400(err);
+    });
 };
 
 const findByUserUUID = (id, options) => {
   const args = { ...options };
   args.include = [
     {
-      model: Group,
-      include: {
-        model: UserGroup,
-        include: [
-          {
-            model: Role,
-            attributes: ['name']
-          }
-        ],
-        where: { userId: id }
-      }
+      model: User,
+      as: 'followers'
     }
   ];
 
@@ -65,14 +89,10 @@ const findByUserUUID = (id, options) => {
         args.sort = 'ASC';
       }
       args.offsetNumber = args.limit * args.page;
-      const { groups } = result.dataValues;
+      const { followers } = result.dataValues;
 
-      groups.forEach(group => {
-        const groupWithDeletedAttributes = group.dataValues;
-        delete groupWithDeletedAttributes.userGroup;
-      });
       args.offset = args.offsetNumber;
-      const sortedVal = OperatorFunctions.sortByKey(groups, args.sortColumn, args.sort).slice(
+      const sortedVal = OperatorFunctions.sortByKey(followers, args.sortColumn, args.sort).slice(
         args.offsetNumber,
         args.offsetNumber + args.limit
       );
@@ -84,65 +104,14 @@ const findByUserUUID = (id, options) => {
     });
 };
 
-const findByGroupUUID = (id, options) => {
-  const args = { ...options };
-  args.include = [
-    {
-      model: User,
-      include: [
-        {
-          model: UserGroup,
-          include: [
-            {
-              model: Role,
-              attributes: ['name']
-            }
-          ],
-          where: { groupId: id }
-        }
-      ]
-    }
-  ];
-
-  return Group.findByPk(id, args)
-    .then(result => {
-      ErrorFunctions.error404(result);
-
-      if (lodash.isNull(args.sortColumn) || lodash.isUndefined(args.sortColumn)) {
-        args.sortColumn = 'name';
-      }
-
-      if (lodash.isNull(args.sort) || lodash.isUndefined(args.sort)) {
-        args.sort = 'ASC';
-      }
-      args.offsetNumber = args.limit * args.page;
-      const { users } = result.dataValues;
-
-      users.forEach(user => {
-        const userWithDeletedAttributes = user.dataValues;
-        delete userWithDeletedAttributes.userGroup;
-      });
-      args.offset = args.offsetNumber;
-      const sortedVal = OperatorFunctions.sortByKey(users, args.sortColumn, args.sort).slice(
-        args.offsetNumber,
-        args.offsetNumber + args.limit
-      );
-      ErrorFunctions.error416(sortedVal, args);
-      return sortedVal;
-    })
-    .catch(err => {
-      throw ErrorFunctions.error400(err);
-    });
-};
-
-const destroy = ({ userUUID, groupUUID }) => {
+const destroy = ({ userUUID, followerUUID }) => {
   const where = {
     where: {
       userId: userUUID,
-      groupId: groupUUID
+      followerId: followerUUID
     }
   };
-  return UserGroup.destroy(where).then(result => {
+  return Subscription.destroy(where).then(result => {
     ErrorFunctions.error404(result);
     return result;
   });
@@ -153,11 +122,11 @@ const update = (values, options) => {
   const items = { ...values };
   args.where = {};
   args.where.userId = args.params.userUUID;
-  args.where.groupId = args.params.groupUUID;
-  return UserGroup.update(items, args).then(result => {
+  args.where.followerId = args.params.followerUUID;
+  return Subscription.update(items, args).then(result => {
     ErrorFunctions.error404(result);
     return result;
   });
 };
 
-module.exports = { findAll, create, findByUserUUID, findByGroupUUID, destroy, update };
+module.exports = { findAll, create, findByUserUUID, findByFollowerUUID, destroy, update };

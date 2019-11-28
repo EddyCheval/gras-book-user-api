@@ -3,7 +3,9 @@ const responseJson = {
     description: 'Internal Server Error',
     examples: {
       'application/json': {
-        message: 'Internal Server Error'
+        statusCode: 'internal.server.error',
+        error: 'Internal Server Error',
+        message: 'Something went wrong'
       }
     }
   }

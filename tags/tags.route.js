@@ -1,12 +1,12 @@
-const Role = require('./roles');
-const json = require('./role.json');
-const { ErrorFunctions, SuccessFunctions } = require('../functions/functions.error');
+const Tag = require('./tags');
+const json = require('./tag.json');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
-  roleSchema,
-  roleUpdateSchema
-} = require('./roles.validator');
+  tagSchema,
+  tagUpdateSchema
+} = require('./tags.validator');
 const {
   response400,
   response200,
@@ -32,12 +32,12 @@ responses.resp201 = response201;
 responses.resp204 = response204;
 responses.resp404 = response404;
 
-const RoleRoute = [
+const TagRoute = [
   {
     method: 'GET',
-    path: '/roles/',
+    path: '/tags/',
     handler(request, h) {
-      return Role.findAll(request)
+      return Tag.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
@@ -61,9 +61,9 @@ const RoleRoute = [
   },
   {
     method: 'GET',
-    path: '/roles/{uuid}',
+    path: '/tags/{uuid}',
     handler(request, h) {
-      return Role.findByUUID(request.params.uuid)
+      return Tag.findByUUID(request.params.uuid)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
@@ -86,15 +86,15 @@ const RoleRoute = [
   },
   {
     method: 'POST',
-    path: '/roles/',
+    path: '/tags/',
     handler(request, h) {
-      return Role.create(request.payload)
+      return Tag.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
-        payload: roleSchema
+        payload: tagSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -112,16 +112,16 @@ const RoleRoute = [
   },
   {
     method: 'PUT',
-    path: '/roles/{uuid}',
+    path: '/tags/{uuid}',
     handler(request, h) {
-      return Role.update(request.payload, request)
+      return Tag.update(request.payload, request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
         params: queryFindByUUIDParamSchema,
-        payload: roleUpdateSchema
+        payload: tagUpdateSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -139,9 +139,9 @@ const RoleRoute = [
   },
   {
     method: 'DELETE',
-    path: '/roles/{uuid}',
+    path: '/tags/{uuid}',
     handler(request, h) {
-      return Role.destroy(request.params)
+      return Tag.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
@@ -163,4 +163,4 @@ const RoleRoute = [
   }
 ];
 
-module.exports = RoleRoute;
+module.exports = TagRoute;

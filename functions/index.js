@@ -1,5 +1,5 @@
 const ErrorFunctions = require('./functions.error');
 const OperatorFunctions = require('./functions.operator');
-// PAR CONTRE SA C TROP BIEN (#bravoJS #TousN'EstPasGris)
+const SuccessFunctions = require('./functions.success');
 
-module.exports = { ErrorFunctions, OperatorFunctions };
+module.exports = { ErrorFunctions, OperatorFunctions, SuccessFunctions };

@@ -3,7 +3,7 @@ const responseJson = {
     description: 'Created',
     examples: {
       'application/json': {
-        message: 'Created'
+        location: '/{entities}/{uuid}'
       }
     }
   }

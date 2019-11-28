@@ -1,12 +1,14 @@
-const Role = require('./roles');
-const json = require('./role.json');
-const { ErrorFunctions, SuccessFunctions } = require('../functions/functions.error');
+const Subscription = require('./subscriptions');
+const json = require('./subscription.json');
+const usersJson = require('./users.json');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
-  queryFindAllParamSchema,
-  queryFindByUUIDParamSchema,
-  roleSchema,
-  roleUpdateSchema
-} = require('./roles.validator');
+  subscriptionSchema,
+  deleteSubscriptionSchema,
+  UUIDvalidatorSchema,
+  BasicQuerySchema
+} = require('./subscriptions.validator');
+
 const {
   response400,
   response200,
@@ -23,6 +25,7 @@ const {
 const responses = {};
 responses.resp200 = response200(json);
 responses.resp206 = response206(json);
+responses.resp200Users = response200(usersJson);
 responses.resp403 = response403;
 responses.resp416 = response416;
 responses.resp500 = response500;
@@ -32,17 +35,17 @@ responses.resp201 = response201;
 responses.resp204 = response204;
 responses.resp404 = response404;
 
-const RoleRoute = [
+const SubscriptionRoute = [
   {
     method: 'GET',
-    path: '/roles/',
+    path: '/subscriptions/',
     handler(request, h) {
-      return Role.findAll(request)
+      return Subscription.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: queryFindAllParamSchema,
+      validate: { query: BasicQuerySchema },
       plugins: {
         'hapi-swagger': {
           responses: {
@@ -61,18 +64,43 @@ const RoleRoute = [
   },
   {
     method: 'GET',
-    path: '/roles/{uuid}',
-    handler(request, h) {
-      return Role.findByUUID(request.params.uuid)
+    path: '/users/{uuid}/Followers',
+    async handler(request, h) {
+      return Subscription.findByUserUUID(request.params.uuid, request.query)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: { params: queryFindByUUIDParamSchema },
+      validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
       plugins: {
         'hapi-swagger': {
           responses: {
-            ...responses.resp200,
+            ...responses.resp200Users,
+            ...responses.resp403,
+            ...responses.resp500,
+            ...responses.resp401,
+            ...responses.resp404
+          },
+          payloadType: 'form'
+        }
+      },
+      tags: ['api']
+    }
+  },
+  {
+    method: 'GET',
+    path: '/users/{uuid}/following',
+    async handler(request, h) {
+      return Subscription.findByFollowerUUID(request.params.uuid, request.query)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
+    },
+    options: {
+      validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
+      plugins: {
+        'hapi-swagger': {
+          responses: {
+            ...responses.resp200Users,
             ...responses.resp403,
             ...responses.resp500,
             ...responses.resp401,
@@ -86,15 +114,15 @@ const RoleRoute = [
   },
   {
     method: 'POST',
-    path: '/roles/',
+    path: '/subscriptions/',
     handler(request, h) {
-      return Role.create(request.payload)
+      return Subscription.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
-        payload: roleSchema
+        payload: subscriptionSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -111,22 +139,19 @@ const RoleRoute = [
     }
   },
   {
-    method: 'PUT',
-    path: '/roles/{uuid}',
+    method: 'DELETE',
+    path: '/users/{followerUUID}/following/{userUUID}',
     handler(request, h) {
-      return Role.update(request.payload, request)
+      return Subscription.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: {
-        params: queryFindByUUIDParamSchema,
-        payload: roleUpdateSchema
-      },
+      validate: { params: deleteSubscriptionSchema },
       plugins: {
         'hapi-swagger': {
           responses: {
-            ...responses.resp200,
+            ...responses.resp204,
             ...responses.resp403,
             ...responses.resp500,
             ...responses.resp401
@@ -139,14 +164,14 @@ const RoleRoute = [
   },
   {
     method: 'DELETE',
-    path: '/roles/{uuid}',
+    path: '/users/{userUUID}/followers/{followerUUID}',
     handler(request, h) {
-      return Role.destroy(request.params)
+      return Subscription.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: { params: queryFindByUUIDParamSchema },
+      validate: { params: deleteSubscriptionSchema },
       plugins: {
         'hapi-swagger': {
           responses: {
@@ -163,4 +188,4 @@ const RoleRoute = [
   }
 ];
 
-module.exports = RoleRoute;
+module.exports = SubscriptionRoute;

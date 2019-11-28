@@ -1,6 +1,7 @@
 const { groupSchema } = require('./groups.validator');
 const json = require('./group.json');
 
+delete json.id;
 describe('groups.validator.js', () => {
   describe('validate', () => {
     it('Validator Success', () => {

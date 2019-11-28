@@ -9,7 +9,8 @@ Role.init(
     id: {
       type: Sequelize.UUID,
       primaryKey: true,
-      allowNull: false
+      allowNull: true,
+      autoIncrement: true
     },
     name: {
       type: Sequelize.STRING,
