@@ -9,7 +9,7 @@ User.init(
     id: {
       type: Sequelize.UUID,
       primaryKey: true,
-      allowNull: false
+      autoIncrement: true
     },
     firstName: {
       type: Sequelize.STRING,
@@ -46,7 +46,8 @@ User.init(
   },
   {
     sequelize: sequelizeInstance,
-    modelName: 'user'
+    modelName: 'user',
+    freezeTableName: true
   }
 );
 

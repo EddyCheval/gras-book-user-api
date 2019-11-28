@@ -1,29 +1,28 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
-const roleSchema = Joi.object({
+const tagSchema = Joi.object({
   name: Joi.string()
     .alphanum()
     .min(1)
     .max(50)
     .required()
-    .description("Role's name"),
+    .description("Tag's name"),
 
   createdAt: Joi.date()
     .utc()
-    .description("Role's creation date"),
+    .description("Tag's creation date"),
 
   updatedAt: Joi.date()
     .utc()
-    .description("Role's last update date")
+    .description("Tag's last update date")
 });
 
 const queryFindAllParamSchema = {
   query: {
     limit: Joi.number()
       .integer()
-      .min(1)
       .max(100)
-      .description('Role limit number')
+      .description('Tag limit number')
       .positive()
       .default(10),
 
@@ -40,27 +39,27 @@ const queryFindAllParamSchema = {
       .alphanum()
       .min(1)
       .max(50)
-      .description("Role's name")
+      .description("Tag's name")
   }
 };
 
 const queryFindByUUIDParamSchema = {
   uuid: Joi.string()
     .guid()
-    .description("Role's uuid")
+    .description("Tag's uuid")
 };
 
-const roleUpdateSchema = Joi.object({
+const tagUpdateSchema = Joi.object({
   name: Joi.string()
     .alphanum()
     .min(1)
     .max(50)
-    .description("Role's name")
+    .description("Tag's name")
 });
 
 module.exports = {
-  roleSchema,
+  tagSchema,
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
-  roleUpdateSchema
+  tagUpdateSchema
 };

@@ -2,9 +2,18 @@ const responseJson = {
   '400': {
     description: 'Bad Request',
     examples: {
-      'application/json': {
-        message: 'Bad Request'
-      }
+      'application/json': [
+        {
+          statusCode: 'column.not.found',
+          error: 'Bad Request',
+          message: 'Invalid column name'
+        },
+        {
+          statusCode: 'unique.constraint.violation',
+          error: 'Bad Request',
+          message: 'Unique key violation'
+        }
+      ]
     }
   }
 };

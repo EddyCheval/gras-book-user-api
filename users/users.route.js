@@ -1,6 +1,6 @@
 const User = require('./users');
 const json = require('./user.json');
-const ErrorFunctions = require('../functions/functions.error');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
@@ -37,7 +37,9 @@ const UserRoute = [
     method: 'GET',
     path: '/users/',
     handler(request, h) {
-      return User.findAll(request).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return User.findAll(request)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: queryFindAllParamSchema,
@@ -61,9 +63,9 @@ const UserRoute = [
     method: 'GET',
     path: '/users/{uuid}',
     handler(request, h) {
-      return User.findByUUID(request.params.uuid).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return User.findByUUID(request.params.uuid)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },
@@ -86,7 +88,9 @@ const UserRoute = [
     method: 'POST',
     path: '/users/',
     handler(request, h) {
-      return User.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return User.create(request.payload)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -110,9 +114,9 @@ const UserRoute = [
     method: 'PUT',
     path: '/users/{uuid}',
     handler(request, h) {
-      return User.update(request.payload, request).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return User.update(request.payload, request)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -137,7 +141,9 @@ const UserRoute = [
     method: 'DELETE',
     path: '/users/{uuid}',
     handler(request, h) {
-      return User.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return User.destroy(request.params)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: queryFindByUUIDParamSchema },

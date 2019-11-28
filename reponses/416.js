@@ -3,7 +3,9 @@ const responseJson = {
     description: 'Range not statisfiable',
     examples: {
       'application/json': {
-        message: 'Range not statisfiable'
+        statusCode: 'invalid.range',
+        error: 'Range Not Satisfiable',
+        message: 'Range not satisfiable'
       }
     }
   }

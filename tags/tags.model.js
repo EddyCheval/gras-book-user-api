@@ -3,8 +3,8 @@ const sequelizeInstance = require('../connectDatabase/connectDatabase');
 
 const { Model } = Sequelize;
 
-class Group extends Model {}
-Group.init(
+class Tag extends Model {}
+Tag.init(
   {
     id: {
       type: Sequelize.UUID,
@@ -15,21 +15,13 @@ Group.init(
     name: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    creationDate: {
-      type: Sequelize.DATE,
-      allowNull: true
-    },
-    description: {
-      type: Sequelize.STRING,
-      allowNull: true
     }
   },
   {
     sequelize: sequelizeInstance,
-    modelName: 'group',
+    modelName: 'tag',
     freezeTableName: true
   }
 );
 
-module.exports = Group;
+module.exports = Tag;

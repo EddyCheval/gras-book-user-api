@@ -11,6 +11,9 @@ const UserRoute = require('./users');
 const GroupRoute = require('./groups');
 const RoleRoute = require('./roles');
 const UserGroupRoute = require('./usersGroups');
+const TagRoute = require('./tags');
+const TagGroupRoute = require('./tagsGroups');
+const SubscriptionRoute = require('./subcriptions');
 
 const init = async () => {
   sequelize
@@ -24,7 +27,12 @@ const init = async () => {
 
   const server = Hapi.server({
     port: process.env.PORT,
-    host: process.env.HOST
+    host: process.env.HOST,
+    routes: {
+      cors: {
+        origin: ['*']
+      }
+    }
   });
 
   const swaggerOptions = {
@@ -54,6 +62,10 @@ const init = async () => {
   server.route(GroupRoute);
   server.route(RoleRoute);
   server.route(UserGroupRoute);
+  server.route(TagRoute);
+  server.route(TagGroupRoute);
+  server.route(SubscriptionRoute);
+
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };

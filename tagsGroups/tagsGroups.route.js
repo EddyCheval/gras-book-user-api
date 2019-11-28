@@ -1,12 +1,16 @@
-const Role = require('./roles');
-const json = require('./role.json');
-const { ErrorFunctions, SuccessFunctions } = require('../functions/functions.error');
+const TagGroup = require('./tagsGroups');
+const json = require('./tagGroup.json');
+const tagJson = require('./tags.json');
+const groupJson = require('./groups.json');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
-  queryFindAllParamSchema,
-  queryFindByUUIDParamSchema,
-  roleSchema,
-  roleUpdateSchema
-} = require('./roles.validator');
+  tagGroupSchema,
+  deleteTagGroupSchema,
+  UUIDvalidatorSchema,
+  BasicQuerySchema,
+  queryFindAllParamSchema
+} = require('./tagsGroups.validator');
+
 const {
   response400,
   response200,
@@ -22,6 +26,8 @@ const {
 
 const responses = {};
 responses.resp200 = response200(json);
+responses.resp200Tags = response200(tagJson);
+responses.resp200Groups = response200(groupJson);
 responses.resp206 = response206(json);
 responses.resp403 = response403;
 responses.resp416 = response416;
@@ -32,12 +38,12 @@ responses.resp201 = response201;
 responses.resp204 = response204;
 responses.resp404 = response404;
 
-const RoleRoute = [
+const TagGroupRoute = [
   {
     method: 'GET',
-    path: '/roles/',
+    path: '/tagsGroups/',
     handler(request, h) {
-      return Role.findAll(request)
+      return TagGroup.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
@@ -61,18 +67,43 @@ const RoleRoute = [
   },
   {
     method: 'GET',
-    path: '/roles/{uuid}',
-    handler(request, h) {
-      return Role.findByUUID(request.params.uuid)
+    path: '/tags/{uuid}/Groups',
+    async handler(request, h) {
+      return TagGroup.findByTagUUID(request.params.uuid, request.query)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: { params: queryFindByUUIDParamSchema },
+      validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
       plugins: {
         'hapi-swagger': {
           responses: {
-            ...responses.resp200,
+            ...responses.resp200Tags,
+            ...responses.resp403,
+            ...responses.resp500,
+            ...responses.resp401,
+            ...responses.resp404
+          },
+          payloadType: 'form'
+        }
+      },
+      tags: ['api']
+    }
+  },
+  {
+    method: 'GET',
+    path: '/groups/{uuid}/Tags',
+    async handler(request, h) {
+      return TagGroup.findByGroupUUID(request.params.uuid, request.query)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
+    },
+    options: {
+      validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
+      plugins: {
+        'hapi-swagger': {
+          responses: {
+            ...responses.resp200Groups,
             ...responses.resp403,
             ...responses.resp500,
             ...responses.resp401,
@@ -86,15 +117,15 @@ const RoleRoute = [
   },
   {
     method: 'POST',
-    path: '/roles/',
+    path: '/tagsGroups/',
     handler(request, h) {
-      return Role.create(request.payload)
+      return TagGroup.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
-        payload: roleSchema
+        payload: tagGroupSchema
       },
       plugins: {
         'hapi-swagger': {
@@ -111,22 +142,19 @@ const RoleRoute = [
     }
   },
   {
-    method: 'PUT',
-    path: '/roles/{uuid}',
+    method: 'DELETE',
+    path: '/groups/{groupUUID}/tags/{tagUUID}',
     handler(request, h) {
-      return Role.update(request.payload, request)
+      return TagGroup.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: {
-        params: queryFindByUUIDParamSchema,
-        payload: roleUpdateSchema
-      },
+      validate: { params: deleteTagGroupSchema },
       plugins: {
         'hapi-swagger': {
           responses: {
-            ...responses.resp200,
+            ...responses.resp204,
             ...responses.resp403,
             ...responses.resp500,
             ...responses.resp401
@@ -139,14 +167,14 @@ const RoleRoute = [
   },
   {
     method: 'DELETE',
-    path: '/roles/{uuid}',
+    path: '/tags/{groupUUID}/groups/{tagUUID}',
     handler(request, h) {
-      return Role.destroy(request.params)
+      return TagGroup.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
         .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
-      validate: { params: queryFindByUUIDParamSchema },
+      validate: { params: deleteTagGroupSchema },
       plugins: {
         'hapi-swagger': {
           responses: {
@@ -163,4 +191,4 @@ const RoleRoute = [
   }
 ];
 
-module.exports = RoleRoute;
+module.exports = TagGroupRoute;

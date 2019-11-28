@@ -53,9 +53,9 @@ const UUIDvalidatorSchema = Joi.object({
 const BasicQuerySchema = {
   limit: Joi.number()
     .integer()
-    .min(1)
     .max(100)
     .description("User's limit")
+    .positive()
     .default(10),
 
   page: Joi.number()

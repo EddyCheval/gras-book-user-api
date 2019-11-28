@@ -15,7 +15,6 @@ const sequelizeInstance = new Sequelize(
       idle: 10000
     },
     schema: 'public'
-    /* define: { freezeTableName: true } */
   }
 );
 

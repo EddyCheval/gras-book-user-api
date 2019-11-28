@@ -2,7 +2,7 @@ const UserGroup = require('./usersGroups');
 const json = require('./userGroup.json');
 const usersJson = require('./users.json');
 const groupsJson = require('./groups.json');
-const { ErrorFunctions } = require('../functions');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
   userGroupSchema,
   deleteUserGroupSchema,
@@ -43,7 +43,9 @@ const UserGroupRoute = [
     method: 'GET',
     path: '/usersGroups/',
     handler(request, h) {
-      return UserGroup.findAll(request).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return UserGroup.findAll(request)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { query: BasicQuerySchema },
@@ -67,9 +69,9 @@ const UserGroupRoute = [
     method: 'GET',
     path: '/users/{uuid}/Groups',
     async handler(request, h) {
-      return UserGroup.findByUserUUID(request.params.uuid, request.query).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return UserGroup.findByUserUUID(request.params.uuid, request.query)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
@@ -92,9 +94,9 @@ const UserGroupRoute = [
     method: 'GET',
     path: '/groups/{uuid}/Users',
     async handler(request, h) {
-      return UserGroup.findByGroupUUID(request.params.uuid, request.query).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return UserGroup.findByGroupUUID(request.params.uuid, request.query)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: UUIDvalidatorSchema, query: BasicQuerySchema },
@@ -117,7 +119,9 @@ const UserGroupRoute = [
     method: 'POST',
     path: '/usersGroups/',
     handler(request, h) {
-      return UserGroup.create(request.payload).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return UserGroup.create(request.payload)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -141,9 +145,9 @@ const UserGroupRoute = [
     method: 'PUT',
     path: '/users/{userUUID}/groups/{groupUUID}',
     handler(request, h) {
-      return UserGroup.update(request.payload, request).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return UserGroup.update(request.payload, request)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -168,9 +172,9 @@ const UserGroupRoute = [
     method: 'PUT',
     path: '/groups/{groupUUID}/users/{userUUID}',
     handler(request, h) {
-      return UserGroup.update(request.payload, request).catch(err =>
-        ErrorFunctions.errorCodeChange(h, err)
-      );
+      return UserGroup.update(request.payload, request)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: {
@@ -195,7 +199,9 @@ const UserGroupRoute = [
     method: 'DELETE',
     path: '/groups/{groupUUID}/users/{userUUID}',
     handler(request, h) {
-      return UserGroup.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return UserGroup.destroy(request.params)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: deleteUserGroupSchema },
@@ -217,7 +223,9 @@ const UserGroupRoute = [
     method: 'DELETE',
     path: '/users/{groupUUID}/groups/{userUUID}',
     handler(request, h) {
-      return UserGroup.destroy(request.params).catch(err => ErrorFunctions.errorCodeChange(h, err));
+      return UserGroup.destroy(request.params)
+        .then(result => SuccessFunctions.successCodeChange(h, result))
+        .catch(err => ErrorFunctions.errorCodeChange(h, err));
     },
     options: {
       validate: { params: deleteUserGroupSchema },

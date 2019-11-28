@@ -1,11 +1,6 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 const userSchema = Joi.object({
-  id: Joi.string()
-    .guid()
-    .required()
-    .description("User's uuid"),
-
   firstName: Joi.string()
     .alphanum()
     .min(1)
@@ -51,6 +46,7 @@ const userSchema = Joi.object({
     .max(250)
     .description("User's description"),
 
+  pictureBlob: Joi.binary().encoding('base64'),
   pictureUrl: Joi.string()
     .uri({ scheme: ['http', 'https'] })
     .required()
@@ -71,9 +67,9 @@ const queryFindAllParamSchema = {
   query: {
     limit: Joi.number()
       .integer()
-      .min(1)
       .max(100)
       .description("User's limit")
+      .positive()
       .default(10),
 
     page: Joi.number()
@@ -83,6 +79,7 @@ const queryFindAllParamSchema = {
       .default(0),
 
     sort: Joi.string().min(1),
+    sortColumn: Joi.string().min(1),
 
     firstName: Joi.string()
       .alphanum()
