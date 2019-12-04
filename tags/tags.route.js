@@ -35,7 +35,7 @@ responses.resp404 = response404;
 const TagRoute = [
   {
     method: 'GET',
-    path: '/tags/',
+    path: '/tags',
     handler(request, h) {
       return Tag.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -86,7 +86,7 @@ const TagRoute = [
   },
   {
     method: 'POST',
-    path: '/tags/',
+    path: '/tags',
     handler(request, h) {
       return Tag.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))

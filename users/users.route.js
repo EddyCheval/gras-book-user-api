@@ -35,7 +35,7 @@ responses.resp404 = response404;
 const UserRoute = [
   {
     method: 'GET',
-    path: '/users/',
+    path: '/users',
     handler(request, h) {
       return User.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -86,7 +86,7 @@ const UserRoute = [
   },
   {
     method: 'POST',
-    path: '/users/',
+    path: '/users',
     handler(request, h) {
       return User.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))

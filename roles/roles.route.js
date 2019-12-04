@@ -35,7 +35,7 @@ responses.resp404 = response404;
 const RoleRoute = [
   {
     method: 'GET',
-    path: '/roles/',
+    path: '/roles',
     handler(request, h) {
       return Role.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -86,7 +86,7 @@ const RoleRoute = [
   },
   {
     method: 'POST',
-    path: '/roles/',
+    path: '/roles',
     handler(request, h) {
       return Role.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
