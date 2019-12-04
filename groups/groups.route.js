@@ -35,7 +35,7 @@ responses.resp404 = response404;
 const GroupRoute = [
   {
     method: 'GET',
-    path: '/groups/',
+    path: '/groups',
     handler(request, h) {
       return Group.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -86,7 +86,7 @@ const GroupRoute = [
   },
   {
     method: 'POST',
-    path: '/groups/',
+    path: '/groups',
     handler(request, h) {
       return Group.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))

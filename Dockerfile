@@ -1,11 +1,11 @@
 FROM node:12.12.0
 
-ENV DB_PORT 8080
+ENV PORT 8080
 
 COPY . .
 
 RUN npm install 
 
-EXPOSE ${DB_PORT}
+EXPOSE ${PORT}
 
 CMD ["node","server.js"]

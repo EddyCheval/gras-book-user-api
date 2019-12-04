@@ -38,7 +38,7 @@ responses.resp404 = response404;
 const SubscriptionRoute = [
   {
     method: 'GET',
-    path: '/subscriptions/',
+    path: '/subscriptions',
     handler(request, h) {
       return Subscription.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -64,7 +64,7 @@ const SubscriptionRoute = [
   },
   {
     method: 'GET',
-    path: '/users/{uuid}/Followers',
+    path: '/users/{uuid}/followers',
     async handler(request, h) {
       return Subscription.findByUserUUID(request.params.uuid, request.query)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -114,7 +114,7 @@ const SubscriptionRoute = [
   },
   {
     method: 'POST',
-    path: '/subscriptions/',
+    path: '/subscriptions',
     handler(request, h) {
       return Subscription.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))

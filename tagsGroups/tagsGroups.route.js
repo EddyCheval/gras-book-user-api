@@ -41,7 +41,7 @@ responses.resp404 = response404;
 const TagGroupRoute = [
   {
     method: 'GET',
-    path: '/tagsGroups/',
+    path: '/tagsGroups',
     handler(request, h) {
       return TagGroup.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -117,7 +117,7 @@ const TagGroupRoute = [
   },
   {
     method: 'POST',
-    path: '/tagsGroups/',
+    path: '/tagsGroups',
     handler(request, h) {
       return TagGroup.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
