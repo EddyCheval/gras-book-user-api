@@ -109,7 +109,7 @@ const findByGroupUUID = (id, options) => {
       ErrorFunctions.error404(result);
 
       if (lodash.isNull(args.sortColumn) || lodash.isUndefined(args.sortColumn)) {
-        args.sortColumn = 'name';
+        args.sortColumn = 'firstName';
       }
 
       if (lodash.isNull(args.sort) || lodash.isUndefined(args.sort)) {
