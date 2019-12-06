@@ -221,7 +221,7 @@ const UserGroupRoute = [
   },
   {
     method: 'DELETE',
-    path: '/users/{groupUUID}/groups/{userUUID}',
+    path: '/users/{userUUID}/groups/{groupUUID}',
     handler(request, h) {
       return UserGroup.destroy(request.params)
         .then(result => SuccessFunctions.successCodeChange(h, result))
