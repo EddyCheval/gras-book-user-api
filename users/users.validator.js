@@ -1,6 +1,11 @@
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 const userSchema = Joi.object({
+  keyCloackUuid: Joi.string()
+    .guid()
+    .required()
+    .description("User's uuid for keycloack"),
+
   firstName: Joi.string()
     .alphanum()
     .min(1)
@@ -80,6 +85,10 @@ const queryFindAllParamSchema = {
 
     sort: Joi.string().min(1),
     sortColumn: Joi.string().min(1),
+
+    keyCloackUuid: Joi.string()
+      .guid()
+      .description("User's uuid for keycloack"),
 
     firstName: Joi.string()
       .alphanum()

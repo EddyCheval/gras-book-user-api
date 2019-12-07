@@ -11,6 +11,9 @@ User.init(
       primaryKey: true,
       autoIncrement: true
     },
+    keyCloackUuid: {
+      type: Sequelize.UUID
+    },
     firstName: {
       type: Sequelize.STRING,
       allowNull: false
