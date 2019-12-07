@@ -16,6 +16,9 @@ const sortByKey = (array, key, order) => {
 const formatQueryiLike = (whereParams, inclusionList) => {
   const where = { ...whereParams };
   Object.keys(where).map(key => {
+    if (key === 'keycloackUUID') {
+      return 1;
+    }
     if (inclusionList.find(value => key === value)) {
       const str = `%${where[key]}%`;
       where[key] = {
