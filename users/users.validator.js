@@ -41,20 +41,18 @@ const userSchema = Joi.object({
     .required()
     .description("User's login"),
 
-  password: Joi.string()
-    .min(8)
-    .max(250)
-    .required()
-    .description("User's password"),
-
   description: Joi.string()
     .max(250)
     .description("User's description"),
 
   pictureBlob: Joi.binary().encoding('base64'),
+
+  pictureType: Joi.string()
+    .valid('jpeg', 'jpg', 'png')
+    .description("Picture's type"),
+
   pictureUrl: Joi.string()
     .uri({ scheme: ['http', 'https'] })
-    .required()
     .description("User's picture url"),
 
   createdAt: Joi.date()

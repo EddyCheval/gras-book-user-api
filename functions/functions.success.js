@@ -29,7 +29,7 @@ const successCodeChange = (h, data) => {
       return h.response(routeToData).code(201);
     }
     const routeToData = {
-      location: `${h.request.route.path}${data.get('id')}`
+      location: `${h.request.route.path}/${data.get('id')}`
     };
     return h.response(routeToData).code(201);
   }
