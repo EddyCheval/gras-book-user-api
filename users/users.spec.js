@@ -114,26 +114,6 @@ describe('users.validator.js', () => {
       expect(userSchema.validate(falsejson).error).not.toBe(null);
     });
 
-    it('Password fail: null value', () => {
-      const falsejson = { ...json, password: undefined };
-      expect(userSchema.validate(falsejson).error).not.toBe(null);
-    });
-
-    it('Password fail: a string value', () => {
-      const falsejson = { ...json, password: 16 };
-      expect(userSchema.validate(falsejson).error).not.toBe(null);
-    });
-
-    it('Password fail: 8 > value', () => {
-      const falsejson = { ...json, password: 'test' };
-      expect(userSchema.validate(falsejson).error).not.toBe(null);
-    });
-
-    it('Password fail: 250 < value', () => {
-      const falsejson = { ...json, password: 'test'.repeat(75) };
-      expect(userSchema.validate(falsejson).error).not.toBe(null);
-    });
-
     it('Description Success: null value', () => {
       const falsejson = { ...json, description: undefined };
       expect(userSchema.validate(falsejson).error).toBe(null);
@@ -149,11 +129,6 @@ describe('users.validator.js', () => {
       expect(userSchema.validate(falsejson).error).not.toBe(null);
     });
 
-    it('Picture Url fail: null value', () => {
-      const falsejson = { ...json, pictureUrl: undefined };
-      expect(userSchema.validate(falsejson).error).not.toBe(null);
-    });
-
     it('Picture Url fail: a string value', () => {
       const falsejson = { ...json, pictureUrl: true };
       expect(userSchema.validate(falsejson).error).not.toBe(null);
@@ -162,6 +137,26 @@ describe('users.validator.js', () => {
     it('Picture Url fail: not a URI value', () => {
       const falsejson = { ...json, pictureUrl: 'notUriValue' };
       expect(userSchema.validate(falsejson).error).not.toBe(null);
+    });
+
+    it('Picture Type fail: not a jpeg, png or jpg value', () => {
+      const falsejson = { ...json, pictureType: 'notTypeValue' };
+      expect(userSchema.validate(falsejson).error).not.toBe(null);
+    });
+
+    it('Picture Type Success: jpg value', () => {
+      const falsejson = { ...json, pictureType: 'jpg' };
+      expect(userSchema.validate(falsejson).error).toBe(null);
+    });
+
+    it('Picture Type Success: jpeg value', () => {
+      const falsejson = { ...json, pictureType: 'jpeg' };
+      expect(userSchema.validate(falsejson).error).toBe(null);
+    });
+
+    it('Picture Type Success: png value', () => {
+      const falsejson = { ...json, pictureType: 'png' };
+      expect(userSchema.validate(falsejson).error).toBe(null);
     });
   });
 });

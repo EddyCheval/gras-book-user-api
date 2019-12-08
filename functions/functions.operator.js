@@ -52,12 +52,13 @@ const UploadBinaryToUri = async values => {
   });
   const params = {
     Bucket: `${bucketName}`,
-    Key: `userApi/${values.firstName}.${values.lastName}.${Date.now()}.jpeg`,
-    Body: values.pictureBlob
+    Key: `userApi/${values.firstName}.${values.lastName}.${Date.now()}.${values.pictureType}`,
+    Body: values.pictureBlob,
+    ACL: 'public-read'
   };
   if (!lodash.isNull(values.pictureBlob) && !lodash.isUndefined(values.pictureBlob)) {
     const string = endpoint.substring(indexOfEnd(endpoint, 'https://'));
-    client.upload(params, err => {
+    await client.upload(params, err => {
       if (err) {
         throw err;
       }
