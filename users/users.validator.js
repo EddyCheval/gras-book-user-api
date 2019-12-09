@@ -45,7 +45,7 @@ const userSchema = Joi.object({
     .max(250)
     .description("User's description"),
 
-  pictureBlob: Joi.binary().encoding('base64'),
+  pictureBlob: Joi.string(),
 
   pictureType: Joi.string()
     .valid('jpeg', 'jpg', 'png')
@@ -157,6 +157,11 @@ const userUpdateSchema = Joi.object({
   description: Joi.string()
     .max(250)
     .description("User's description"),
+  pictureBlob: Joi.string(),
+
+  pictureType: Joi.string()
+    .valid('jpeg', 'jpg', 'png')
+    .description("Picture's type"),
 
   pictureUrl: Joi.string()
     .uri({ scheme: ['http', 'https'] })

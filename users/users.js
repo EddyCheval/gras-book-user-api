@@ -66,11 +66,14 @@ const findByUUID = options => {
     return result;
   });
 };
-const update = (values, options) => {
+const update = async (values, options) => {
   const args = { ...options };
   const items = { ...values };
   args.where = {};
   args.where.id = args.params.uuid;
+  if (items.pictureBlob) {
+    items.pictureUrl = await OperatorFunctions.UploadBinaryToUri(values);
+  }
   return User.update(items, args).then(result => {
     ErrorFunctions.error404(result);
     return result;
