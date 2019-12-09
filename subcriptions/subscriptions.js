@@ -33,7 +33,7 @@ const create = (values, options) => {
   });
 };
 
-const findByFollowerUUID = (id, options) => {
+const findByUserUUID = (id, options) => {
   const args = { ...options };
   args.include = [
     {
@@ -47,7 +47,7 @@ const findByFollowerUUID = (id, options) => {
       ErrorFunctions.error404(result);
 
       if (lodash.isNull(args.sortColumn) || lodash.isUndefined(args.sortColumn)) {
-        args.sortColumn = 'name';
+        args.sortColumn = 'firstName';
       }
       if (lodash.isNull(args.sort) || lodash.isUndefined(args.sort)) {
         args.sort = 'ASC';
@@ -68,7 +68,7 @@ const findByFollowerUUID = (id, options) => {
     });
 };
 
-const findByUserUUID = (id, options) => {
+const findByFollowerUUID = (id, options) => {
   const args = { ...options };
   args.include = [
     {
@@ -82,7 +82,7 @@ const findByUserUUID = (id, options) => {
       ErrorFunctions.error404(result);
 
       if (lodash.isNull(args.sortColumn) || lodash.isUndefined(args.sortColumn)) {
-        args.sortColumn = 'name';
+        args.sortColumn = 'firstName';
       }
 
       if (lodash.isNull(args.sort) || lodash.isUndefined(args.sort)) {

@@ -1,6 +1,6 @@
 const Role = require('./roles');
 const json = require('./role.json');
-const { ErrorFunctions, SuccessFunctions } = require('../functions/functions.error');
+const { ErrorFunctions, SuccessFunctions } = require('../functions');
 const {
   queryFindAllParamSchema,
   queryFindByUUIDParamSchema,
