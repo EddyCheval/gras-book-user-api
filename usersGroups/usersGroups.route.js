@@ -41,7 +41,7 @@ responses.resp404 = response404;
 const UserGroupRoute = [
   {
     method: 'GET',
-    path: '/usersGroups/',
+    path: '/usersGroups',
     handler(request, h) {
       return UserGroup.findAll(request)
         .then(result => SuccessFunctions.successCodeChange(h, result))
@@ -117,7 +117,7 @@ const UserGroupRoute = [
   },
   {
     method: 'POST',
-    path: '/usersGroups/',
+    path: '/usersGroups',
     handler(request, h) {
       return UserGroup.create(request.payload)
         .then(result => SuccessFunctions.successCodeChange(h, result))
