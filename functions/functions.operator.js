@@ -49,7 +49,7 @@ const UploadBinaryToUri = async values => {
     region,
     endpoint
   });
-  if (!lodash.isNull(pictureBlob) && !lodash.isUndefined(pictureBlob)) {
+  if (!lodash.isNull(values.pictureBlob) && !lodash.isUndefined(values.pictureBlob)) {
     // eslint-disable-next-line new-cap
     const pictureBlob = new Buffer.from(
       values.pictureBlob.replace(/^data:image\/\w+;base64,/, ''),
