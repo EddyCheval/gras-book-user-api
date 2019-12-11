@@ -1,5 +1,8 @@
 <h1 align="center">Welcome to gras-book-user-api 👋</h1>
 <p>
+  <a target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/post-api.svg">
+  </a>
   <img alt="Version" src="https://img.shields.io/badge/version-1-blue.svg?cacheSeconds=2592000" />
   <a href="api.users.eddycheval.codes/documentation" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -7,9 +10,26 @@
   <a href="#" target="_blank">
     <img alt="License: ISC" src="https://img.shields.io/badge/License-ISC-yellow.svg" />
   </a>
+  <a href="http://api.users.eddycheval.codes/documentation" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/EddyCheval/grasbook-user-api/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+    <img alt="License: ISC" src="https://img.shields.io/github/license/Singebob/post-api" />
+  </a>
 </p>
 
-> User API of GrasBook social network maybe for Americains&#34;
+> User API of GrasBook social network maybe for Americains. A Social network developped in a micro-services architecture and using JS and Python&#34;
+
+## Other Projects :
+
+- Recreating a facebook-like app. Seperated in micro-services with a service for each part :
+  - Posts API (https://gitlab.com/projet-gras-book/post-api && https://github.com/Singebob/grasbook-post-api)
+  - Messaging API (https://gitlab.com/projet-gras-book/message-api)
+  - User API (https://gitlab.com/projet-gras-book/user-api && here)
+  - Reaction API (https://gitlab.com/projet-gras-book/api-reaction)
+  - Gras-Book UI (https://gitlab.com/projet-gras-book/gras-book-ui)
 
 ### 🏠 [Homepage](https://gitlab.com/projet-gras-book/user-api#readme)
 
@@ -26,15 +46,6 @@ npm install
 ```sh
 npm run test
 ```
-
-## Other Projects :
-
-- Recreating a facebook-like app. Seperated in micro-services with a service for each part :
-  - Posts API (https://gitlab.com/projet-gras-book/post-api)
-  - Messaging API (https://gitlab.com/projet-gras-book/message-api)
-  - User API (here)
-  - Reaction API (https://gitlab.com/projet-gras-book/api-reaction)
-  - Gras-Book UI (https://gitlab.com/projet-gras-book/gras-book-ui)
 
 ## Environement Example :
 
@@ -76,8 +87,16 @@ npm run test
 
 ## Author
 
+👤 **Eddy Cheval**
+
 - Github: [@EddyCheval](https://github.com/EddyCheval)
-- LinkedIn: [@Eddy Cheval](https://linkedin.com/in/Eddy Cheval)
+- LinkedIn: [@Eddy Cheval](https://www.linkedin.com/in/eddy-cheval-0542b8141/)
+
+Others contributors
+
+- Github: [@SimonHuet](https://github.com/SimonHuet)
+- Github: [@YannDurand](https://github.com/Nefaden)
+- Github: [@Singebob](https://github.com/Singebob)
 
 ## 🤝 Contributing
 
@@ -86,6 +105,9 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
+
+Copyright © 2019 [Eddy Cheval](https://github.com/EddyCheval).<br />
+This project is [ISC]() licensed.
 
 ---
 
