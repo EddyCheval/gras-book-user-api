@@ -4,7 +4,7 @@
     <img alt="Version" src="https://img.shields.io/npm/v/post-api.svg">
   </a>
   <img alt="Version" src="https://img.shields.io/badge/version-1-blue.svg?cacheSeconds=2592000" />
-  <a href="api.users.eddycheval.codes/documentation" target="_blank">
+  <a href="http://api.users.eddycheval.codes/documentation" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="#" target="_blank">
@@ -20,7 +20,7 @@
   </a>
 </p>
 
-> User API of GrasBook social network maybe for Americains. A Social network developped in a micro-services architecture and using JS and Python&#34;
+> User API of GrasBook social network maybe for Americains. A Social network developped in a micro-services architecture using JS and Python&#34;
 
 ## Other Projects :
 
